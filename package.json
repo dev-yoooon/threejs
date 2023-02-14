@@ -1,0 +1,23 @@
+{
+  "name": "three",
+  "version": "1.0.0",
+  "description": "test three js",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "author": "yoooon",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.149.0",
+    "three-orbitcontrols": "^2.110.3"
+  },
+  "devDependencies": {
+    "lil-gui": "^0.18.0",
+    "sass": "^1.58.0",
+    "vite": "^4.1.1"
+  }
+}
