@@ -1,4 +1,12 @@
 # THREE.js
+## 작업환경
+``` javascript
+node 18
+npm 8.19.2
+three 0.149.0
+lil-gui 0.18.0
+vite 4.1.1
+```
 ## 만든 이유
 - 심심해서 만들어봄.
 
