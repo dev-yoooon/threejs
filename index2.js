@@ -26,14 +26,14 @@ const renderer = new three.WebGLRenderer({
     canvas: document.querySelector('#canvas'),
     antialias: true,
 });
-scene.background = new three.Color('#000');
+scene.background = new three.Color('blue');
 
 // light
 // const light = new DirectionalLight(0xffff00, 1);
 const light = new three.AmbientLight( 0xffffff, 1 );
 const pointLight = new three.PointLight(0xffffff, 1)
 // pointLight.position.set(0, 2, 12)
-// scene.add(pointLight)
+scene.add(pointLight)
 scene.add(light);
 
 
