@@ -1,4 +1,4 @@
-// import { Scene, WebGLRenderer, PerspectiveCamera, Color, DirectionalLight, sRGBEncoding, Clock, AnimationMixer, AmbientLight } from 'three';
+import { Scene, WebGLRenderer, PerspectiveCamera, Color, DirectionalLight, sRGBEncoding, Clock, AnimationMixer, AmbientLight } from 'three';
 import * as three from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -27,10 +27,21 @@ const renderer = new three.WebGLRenderer({
     antialias: true,
 });
 scene.background = new three.Color('#fff');
+
+// light
 // const light = new DirectionalLight(0xffff00, 1);
 const light = new three.AmbientLight( 0xffffff );
+const pointLight = new three.PointLight(0xffffff, 1)
+pointLight.position.set(0, 2, 12)
+scene.add(pointLight)
+
 scene.add(light);
 
+// texture
+const textureLoader = new three.TextureLoader();
+const textureMew = textureLoader.load('./model/mew/textures/material_0_baseColor.png');
+
+// controls
 renderer.outputEncoding = three.sRGBEncoding;
 controls = new OrbitControls(camera, renderer.domElement)
 
@@ -45,8 +56,8 @@ model();
 function model(){
     const loader = new GLTFLoader();
     // const gltfUrl = './model/cat/scene.gltf';
-    // const gltfUrl = './model/cute_cat/scene.gltf';
-    const gltfUrl = './model/mew/scene.gltf';
+    const gltfUrl = './model/cute_cat/scene.gltf';
+    // const gltfUrl = './model/mew/scene.gltf';
 
     loader.load( gltfUrl , ( gltf ) => {
         
@@ -56,7 +67,17 @@ function model(){
         
         // model.position.y = -10;
         model.rotation.y = 0;
+        model.scale.set(1.1, 1.1, 1.1);
+        // textureMew
+        //텍스쳐 적용
+    //   model.traverse((child) => {
+    //     if (child.isMesh) {
+    //       child.material = child.material.clone();
+    //       child.material.map = textureMew;
+    //     }
+    //   });
 
+    //   groupRef.current.add(model); 
         // debug
         gui.add(model.position, 'y', -1000, 1000, 1).name('model position y');
         gui.add(model.position, 'z', 0, 1000, 1).name('model position z');
@@ -98,9 +119,9 @@ function ZoomFit(object3D, camera){
 }
 
 function background() {
-    const loader = new three.TextureLoader();
+    
     const url = './model/background/bg1.jpeg';
-    const texture = loader.load( url, () => {
+    const texture = textureLoader.load( url, () => {
         const renderTarget = new three.WebGLCubeRenderTarget(texture.image.height);
         renderTarget.fromEquirectangularTexture(renderer, texture);
         scene.background = renderTarget.texture;
