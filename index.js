@@ -20,13 +20,14 @@ const camera = new three.PerspectiveCamera( 45, window.innerWidth / window.inner
 // camera.position.y = ;
 camera.position.z = 10;
 
+
 // scene
 const scene = new three.Scene();
 const renderer = new three.WebGLRenderer({
     canvas: document.querySelector('#canvas'),
     antialias: true,
 });
-scene.background = new three.Color('#fff');
+// scene.background = new three.Color('#fff');
 // const light = new DirectionalLight(0xffff00, 1);
 const light = new three.AmbientLight( 0xffffff );
 scene.add(light);
@@ -62,6 +63,8 @@ function model(){
         gui.add(model.rotation, 'y', 0, 1000, 1).name('model rotation y');
         gui.add(camera.position, 'y', 0, 1000, 1).name('camera position y');
 
+        // camera.lookAt(model.position);
+
         scene.add( model );
         ZoomFit(model, camera);
         
@@ -83,7 +86,7 @@ function ZoomFit(object3D, camera){
     const box = new three.Box3().setFromObject(object3D);
     const sizeBox = box.getSize(new three.Vector3()).length();
     const centerBox = box.getCenter(new three.Vector3());
-    const halfSizeModel =  sizeBox * 0.8;
+    const halfSizeModel =  sizeBox * 0.7;
     const halfFov = three.MathUtils.degToRad(camera.fov * 0.3);
     const distance = halfSizeModel / Math.tan(halfFov);
     const direction = new three.Vector3().subVectors(camera.position, centerBox).normalize();
