@@ -1,6 +1,6 @@
 import { Scene, WebGLRenderer, PerspectiveCamera, Color, DirectionalLight, sRGBEncoding, Clock, AnimationMixer, AmbientLight } from 'three';
 import * as three from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as lil from 'lil-gui';
 import './style.scss';
@@ -16,9 +16,9 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 // camera
-const camera = new three.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 100);
+const camera = new three.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000);
 // camera.position.y = ;
-camera.position.z = 10;
+camera.position.z = 0;
 
 // scene
 const scene = new three.Scene();
@@ -26,13 +26,13 @@ const renderer = new three.WebGLRenderer({
     canvas: document.querySelector('#canvas'),
     antialias: true,
 });
-scene.background = new three.Color('#fff');
+scene.background = new three.Color('#000');
 
 // light
 // const light = new DirectionalLight(0xffff00, 1);
 const light = new three.AmbientLight( 0xffffff );
 const pointLight = new three.PointLight(0xffffff, 1)
-pointLight.position.set(0, 2, 12)
+// pointLight.position.set(0, 2, 12)
 scene.add(pointLight)
 
 scene.add(light);
@@ -49,7 +49,7 @@ console.log(controls);
 
 clock = new three.Clock();
 
-background();
+// background();
 model();
 
 // gltf
