@@ -3,7 +3,7 @@ import * as three from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 // import * as lil from 'lil-gui';
-import './style.scss';
+// import './style.scss';
 
 let clock, mixer, controls;
 
@@ -61,7 +61,7 @@ function model(){
         const model = gltf.scene;
         mixer = new three.AnimationMixer(model);
         mixer.clipAction(gltf.animations[0]).play(); 
-        console.log('load', model);
+        console.log('load', gltf);
         
         // model.position.y = -10;
         model.rotation.y = 0;
