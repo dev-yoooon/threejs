@@ -30,10 +30,10 @@ scene.background = new three.Color('#000');
 
 // light
 // const light = new DirectionalLight(0xffff00, 1);
-const light = new three.AmbientLight( 0xffffff );
+const light = new three.AmbientLight( 0xffffff, 1 );
 const pointLight = new three.PointLight(0xffffff, 1)
 // pointLight.position.set(0, 2, 12)
-scene.add(pointLight)
+// scene.add(pointLight)
 scene.add(light);
 
 
@@ -58,15 +58,18 @@ function model(){
     const gltfUrl = './model/mew/scene.gltf';
 
     loader.load( gltfUrl , ( gltf ) => {
-        
         const model = gltf.scene;
         mixer = new three.AnimationMixer(model);
         mixer.clipAction(gltf.animations[0]).play(); 
+        console.log('load', model);
         
         // model.position.y = -10;
         model.rotation.y = 0;
-        model.scale.set(1, 1, 1);
-        // model.position.set(0,-0.04,0);
+        model.scale.set(1.1, 1.1, 1.1);
+        model.position.set(0,-0.5,0);
+
+        const obj = new three.Box3().setFromObject(model);
+        console.log(obj.getSize(new three.Vector3()));
 
         // textureMew
         //텍스쳐 적용
@@ -93,6 +96,7 @@ function model(){
             // gltf.scene.rotation.y -= 0.01;
             // gltf.scene.rotation.x += 0.01;
             if( mixer ) {
+                // console.log(clock.getDelta());
                 mixer.update(clock.getDelta());
             }
             renderer.render( scene, camera );
@@ -105,7 +109,7 @@ function ZoomFit(object3D, camera){
     const box = new three.Box3().setFromObject(object3D);
     const sizeBox = box.getSize(new three.Vector3()).length();
     const centerBox = box.getCenter(new three.Vector3());
-    const halfSizeModel =  sizeBox * 0.8;
+    const halfSizeModel =  sizeBox * 0.3;
     const halfFov = three.MathUtils.degToRad(camera.fov * 0.3);
     const distance = halfSizeModel / Math.tan(halfFov);
     const direction = new three.Vector3().subVectors(camera.position, centerBox).normalize();
