@@ -56,8 +56,8 @@ model();
 function model(){
     const loader = new GLTFLoader();
     // const gltfUrl = './model/cat/scene.gltf';
-    const gltfUrl = './model/cute_cat/scene.gltf';
-    // const gltfUrl = './model/mew/scene.gltf';
+    // const gltfUrl = './model/cute_cat/scene.gltf';
+    const gltfUrl = './model/mew/scene.gltf';
 
     loader.load( gltfUrl , ( gltf ) => {
         
@@ -70,19 +70,19 @@ function model(){
         model.scale.set(1.1, 1.1, 1.1);
         // textureMew
         //텍스쳐 적용
-    //   model.traverse((child) => {
-    //     if (child.isMesh) {
-    //       child.material = child.material.clone();
-    //       child.material.map = textureMew;
-    //     }
-    //   });
+        model.traverse((child) => {
+            if (child.isMesh) {
+            // child.material = child.material.clone();
+            child.material.map = textureMew;
+            }
+        });
 
-    //   groupRef.current.add(model); 
         // debug
         gui.add(model.position, 'y', -1000, 1000, 1).name('model position y');
         gui.add(model.position, 'z', 0, 1000, 1).name('model position z');
         gui.add(model.rotation, 'y', 0, 1000, 1).name('model rotation y');
         gui.add(camera.position, 'y', 0, 1000, 1).name('camera position y');
+        gui.add(camera.position, 'z', 0, 1000, 1).name('camera position z');
 
         scene.add( model );
         ZoomFit(model, camera);
