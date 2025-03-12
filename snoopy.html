@@ -7,7 +7,7 @@
     <title>Three js</title>
     <style>
         body{padding:0;margin:0}canvas{display:block}
-        .btn{position: absolute;z-index: 1;bottom: 20px;left: 20px;}
+        .btn-wrap{display: flex;gap: 4px;position: absolute;z-index: 1;bottom: 20px;left: 20px;}
         #btn-snoopy{right: 20px;left: auto}
     </style>
     <script type="importmap">
@@ -25,8 +25,12 @@
     <div class="canvas-wrap">
         <canvas id="canvas" width="400" height="400"></canvas>
 
-        <button type="button" class="btn" id="btn-cat">Ugly Cat</button>
-        <button type="button" class="btn" id="btn-snoopy">Snoopy</button>
+        <div class="btn-wrap">
+            <button type="button" class="btn" id="btn-cat">Ugly Cat</button>
+            <button type="button" class="btn" id="act1">Ugly Cat act1</button>
+            <button type="button" class="btn" id="act2">Ugly Cat act2</button>
+            <button type="button" class="btn" id="btn-snoopy">Snoopy</button>
+        </div>
     </div>
     <!-- <script type="module" src="index.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

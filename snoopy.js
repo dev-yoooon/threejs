@@ -124,7 +124,7 @@ let modelName;
 
 
 // gltf
-function model(url, options){
+function model(url, options, animation = 0){
     const loader = new GLTFLoader();
     // const gltfUrl = './model/cat/scene.gltf';
     // const gltfUrl = './model/cute_cat/scene.gltf';
@@ -135,9 +135,11 @@ function model(url, options){
         const model = gltf.scene;
         modelName = gltf.scene;
         mixer = new three.AnimationMixer(model);
-        mixer.clipAction(gltf.animations[0]).play(); 
+        mixer.clipAction(gltf.animations[animation]).play(); 
+        console.log(gltf);
 
-        window.model = mixer.clipAction(gltf.animations[0]);
+        window.model = gltf;
+        window.mixer = mixer;
         
         options(model);
         // model.rotation.y = -1;
@@ -220,9 +222,11 @@ function background() {
     })
 }
 
+let isCat = false;
 $('#btn-cat').on('click', function(e){
     e.preventDefault();
     scene.remove(modelName);
+    isCat = true;
     model('./model/ugly_cat/scene.gltf', function(model){
         model.rotation.y = -0.7;
         model.scale.set(0.5, 0.5, 0.5);
@@ -230,10 +234,36 @@ $('#btn-cat').on('click', function(e){
         camera.position.z = 12;
     });
     
-})
+});
+// $('#act1').on('click', function(e){
+//     e.preventDefault();
+//     scene.remove(modelName);
+//     isCat = true;
+//     model('./model/ugly_cat/scene.gltf', function(model){
+//         model.rotation.y = -0.7;
+//         model.scale.set(0.5, 0.5, 0.5);
+//         model.position.set(0,-0.5,-0);
+//         camera.position.z = 12;
+//     }, 1);
+
+    
+// });
+$('#act2').on('click', function(e){
+    e.preventDefault();
+    scene.remove(modelName);
+    isCat = true;
+    model('./model/ugly_cat/scene.gltf', function(model){
+        model.rotation.y = -0.7;
+        model.scale.set(0.5, 0.5, 0.5);
+        model.position.set(0,-0.5,-0);
+        camera.position.z = 12;
+    }, 2);
+    
+});
 $('#btn-snoopy').on('click', function(e){
     e.preventDefault();
     scene.remove(modelName);
+    isCat = false;
     model('./model/snoopy/scene.gltf', function(model){
         model.rotation.y = -1;
         model.scale.set(1.1, 1.1, 1.1);
