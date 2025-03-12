@@ -1,7 +1,7 @@
 // import { Scene, WebGLRenderer, PerspectiveCamera, Color, DirectionalLight, sRGBEncoding, Clock, AnimationMixer, AmbientLight } from 'three';
 import * as three from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import * as lil from 'lil-gui';
 import './style.scss';
 
@@ -9,6 +9,7 @@ let clock, mixer, controls;
 
 // debug
 const gui = new lil.GUI;
+
 
 //  canvas
 const canvas = document.querySelector('#canvas');
@@ -36,6 +37,8 @@ renderer.outputEncoding = three.sRGBEncoding;
 controls = new OrbitControls(camera, renderer.domElement)
 
 console.log(controls);
+const axeHelper = new three.AxesHelper(1);
+scene.add(axeHelper);
 
 clock = new three.Clock();
 
