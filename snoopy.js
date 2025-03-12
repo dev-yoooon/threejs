@@ -62,7 +62,7 @@ function model(){
     const loader = new GLTFLoader();
     // const gltfUrl = './model/cat/scene.gltf';
     // const gltfUrl = './model/cute_cat/scene.gltf';
-    const gltfUrl = './model/ugly_cat/scene.gltf';
+    const gltfUrl = './model/snoopy/scene.gltf';
 
     loader.load( gltfUrl , ( gltf ) => {
         const model = gltf.scene;
