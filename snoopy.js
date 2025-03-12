@@ -137,7 +137,7 @@ function model(url, options){
         mixer = new three.AnimationMixer(model);
         mixer.clipAction(gltf.animations[0]).play(); 
 
-        window.model = model;
+        window.model = mixer.clipAction(gltf.animations[0]);
         
         options(model);
         // model.rotation.y = -1;
