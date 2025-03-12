@@ -6,7 +6,7 @@ import * as lil from 'lil-gui';
 // import './style.scss';
 
 let clock, mixer, controls;
-
+ 
 // debug
 const gui = new lil.GUI;
 
