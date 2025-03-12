@@ -235,19 +235,19 @@ $('#btn-cat').on('click', function(e){
     });
     
 });
-// $('#act1').on('click', function(e){
-//     e.preventDefault();
-//     scene.remove(modelName);
-//     isCat = true;
-//     model('./model/ugly_cat/scene.gltf', function(model){
-//         model.rotation.y = -0.7;
-//         model.scale.set(0.5, 0.5, 0.5);
-//         model.position.set(0,-0.5,-0);
-//         camera.position.z = 12;
-//     }, 1);
+$('#act1').on('click', function(e){
+    e.preventDefault();
+    scene.remove(modelName);
+    isCat = true;
+    model('./model/ugly_cat/scene.gltf', function(model){
+        model.rotation.y = -0.7;
+        model.scale.set(0.5, 0.5, 0.5);
+        model.position.set(0,-0.5,-0);
+        camera.position.z = 12;
+    }, 1);
 
     
-// });
+});
 $('#act2').on('click', function(e){
     e.preventDefault();
     scene.remove(modelName);
