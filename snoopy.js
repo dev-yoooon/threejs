@@ -18,6 +18,7 @@ canvas.height = window.screen.height;
 
 // camera
 const camera = new three.PerspectiveCamera( 45, window.screen.width / window.screen.height, 1, 1000);
+camera.position.y = 0.1;
 camera.position.z = 2;
 
     //gui
