@@ -8,7 +8,7 @@ let clock, mixer, controls;
 
 // debug
 const gui = new lil.GUI;
-gui.hide();
+// gui.hide();
 gui.close();
 
 //  canvas
@@ -18,7 +18,7 @@ canvas.height = window.innerHeight;
 
 // camera
 const camera = new three.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000);
-camera.position.y = 1.8;
+camera.position.y = 0.7;
 camera.position.z = 2;
 
     //gui 
