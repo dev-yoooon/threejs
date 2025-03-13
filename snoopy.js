@@ -13,8 +13,8 @@ gui.close();
 
 //  canvas
 const canvas = document.querySelector('#canvas');
-canvas.width = window.screen.width;
-canvas.height = window.screen.height;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 // camera
 const camera = new three.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000);
