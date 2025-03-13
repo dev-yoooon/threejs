@@ -1,4 +1,3 @@
-import { Scene, WebGLRenderer, PerspectiveCamera, Color, DirectionalLight, sRGBEncoding, Clock, AnimationMixer, AmbientLight } from 'three';
 import * as three from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -9,6 +8,7 @@ let clock, mixer, controls;
 
 // debug
 const gui = new lil.GUI;
+gui.hide();
 gui.close();
 
 //  canvas
@@ -18,13 +18,14 @@ canvas.height = window.screen.height;
 
 // camera
 const camera = new three.PerspectiveCamera( 45, window.screen.width / window.screen.height, 1, 1000);
+camera.position.y = 1.8;
 camera.position.z = 2;
 
-    //gui
+    //gui 
 const cameraFolder = gui.addFolder('camera')
 cameraFolder.add(camera.position, 'x', -5, 5, 0.1).name('X');
 cameraFolder.add(camera.position, 'y', -5, 5, 0.1).name('y');
-cameraFolder.add(camera.position, 'z', -5, 5, 0.1).name('z');
+cameraFolder.add(camera.position, 'z', -5, 20, 0.1).name('z');
 cameraFolder.close();
 
 // scene
@@ -40,35 +41,21 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = three.PCFSoftShadowMap;
 
 // background color
-scene.background = new three.Color('#daab3d');
+scene.background = new three.Color('#618d1e');
 
 // light
 // const light = new DirectionalLight(0xffff00, 1);
 const light = new three.AmbientLight( 0xffffff, 1 );
-const pointLight = new three.PointLight(0xffffff, 1);
-const hemisphereLight = new three.HemisphereLight(0xffffff, 0xffffff, 0.7)
-const hemisphereLightHelper = new three.HemisphereLightHelper( hemisphereLight, 0.2 );
 const directionalLight = new three.DirectionalLight(0xffffff, 0.7)
-//특정방향으로 빛을 비춘다.
 directionalLight.position.set(-5, 1.5, 3)
-//각 빛마다 helper옵션을 줄 수 있다. 첫번째 속성은 빛, 두번째 속성은 사이즈, 세번째는 색
-// const dlHelper = new three.DirectionalLightHelper( directionalLight, 0.2, 0x0000ff )
-// scene.add(dlHelper)
 scene.add(directionalLight)
-// scene.add(hemisphereLight)
-// scene.add(hemisphereLightHelper);
-// pointLight.position.set(0, 2, 12)
-// scene.add(pointLight)
 scene.add(light);
-
-// pointLight.position.set( 10, 10, 1 );
-// pointLight.castShadow = true;
 directionalLight.castShadow = true //⭐빛에 castshadow 설정
 // 
 
 // 바닥
 const planeGeometry = new three.PlaneGeometry(200, 100);
-const planeMeterial = new three.MeshLambertMaterial({ color: '#daab3d' });
+const planeMeterial = new three.MeshLambertMaterial({ color: '#618d1e' });
 const plane = new three.Mesh(planeGeometry, planeMeterial);
 plane.rotation.x = -0.5 * Math.PI;
 plane.position.y = -0.5;
@@ -100,24 +87,22 @@ controls.autoRotate = true;
 // controls.autoRotateSpeed = 200;
 // controls.enableDamping = true;
 // controls.dampingFactor = 0.01
-controls.maxDistance = 10;
-controls.minDistance = 1.2;
+controls.maxDistance = 50;
+controls.minDistance = 10;
 controls.maxPolarAngle = Math.PI / 2;
 controls.minPolarAngle = Math.PI / 3;
 // controls.maxAzimuthAngle = Math.PI / 2;
 // controls.minAzimuthAngle = Math.PI / 3;
-
-
    
     // constrols event
-controls.addEventListener( "change", event => {  
-    console.log( controls.object.position ); 
-});
+// controls.addEventListener( "change", event => {  
+//     console.log( controls.object.position ); 
+// });
 
 clock = new three.Clock();
 
 // background();
-const snoopy = model('./model/snoopy/scene.gltf', function(model){
+const snoopy = model('./model/ugly_cat/scene.gltf', function(model){
     model.rotation.y = -1;
     model.scale.set(1.1, 1.1, 1.1);
     model.position.set(0,-0.5,0);
@@ -125,7 +110,7 @@ const snoopy = model('./model/snoopy/scene.gltf', function(model){
 
 
 // gltf
-function model(url, options, animation = 0){
+function model(url){
     const loader = new GLTFLoader();
     const gltfUrl = url;
 
@@ -133,13 +118,20 @@ function model(url, options, animation = 0){
     loader.load( gltfUrl , ( gltf ) => {
         const model = gltf.scene;
         mixer = new three.AnimationMixer(model);
-        mixer.clipAction(gltf.animations[animation]).play(); 
-
+        mixer.clipAction(gltf.animations[0]).play(); 
+        
         window.self = gltf;
         window.mixer = mixer;
-        
-        options(model);
 
+        model.rotation.y = -0.7;
+        model.scale.set(0.5, 0.5, 0.5);
+        model.position.set(0,-0.5,-0);
+        camera.position.z = 12;
+
+
+        const obj = new three.Box3().setFromObject(model);
+
+        // textureMew
         //텍스쳐 적용
         model.traverse((child) => {
             if (child.isMesh) {
@@ -158,11 +150,13 @@ function model(url, options, animation = 0){
 
         scene.add( model );
         camera.lookAt(camera.position);
+
         animate();
         model.castShadow = true;
         
         function animate(){
             requestAnimationFrame(animate);
+
             if( mixer ) {
                 mixer.update(clock.getDelta());
             }
@@ -176,11 +170,23 @@ function model(url, options, animation = 0){
         }
         $('#act1').on('click', function(e){
             e.preventDefault();
-            mixer._actions[0].paused = false;
+            motionStop()
+            mixer.clipAction(gltf.animations[0]).play();
         });
         $('#act2').on('click', function(e){
             e.preventDefault();
-            mixer._actions[0].paused = true;
+            motionStop();
+            mixer.clipAction(gltf.animations[1]).play();
         });
+        $('#act3').on('click', function(e){
+            e.preventDefault();
+            motionStop();
+            mixer.clipAction(gltf.animations[2]).play();
+        });
+        
     });
 }
+
+
+
+
